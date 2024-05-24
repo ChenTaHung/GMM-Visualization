@@ -165,3 +165,29 @@ GmmViz.generateGIF(image_path = "doc/image/dim2/ll", output_path_filename = "doc
 ```
 
 <p align = 'center'><img src = 'https://github.com/ChenTaHung/GMM-Visualization/blob/main/doc/image/dim2/parms/gif/GMM-2D-Parms.gif' alt = 'Image' style = 'width: 800px'/></p>
+
+
+<h2><b>Environment</b></h2>
+
+```bash
+OS : macOS Sonoma 14.5
+IDE: Visual Studio Code 
+Language : Python       3.9.7 
+
+Package list:
+backports.shutil-get-terminal-size 1.0.0
+imageio                            2.9.0
+matplotlib                         3.7.2
+matplotlib-inline                  0.1.6
+numpy                              1.20.3
+numpydoc                           1.1.0
+pandas                             1.5.3
+plotly                             5.21.0
+scipy                              1.10.1
+```
+
+<h2><p><b>Developers</b></p></h2>
+
+Denny Chen
+   -  LinkedIn Profile : https://www.linkedin.com/in/dennychen-tahung/
+   -  E-Mail : denny20700@gmail.com
