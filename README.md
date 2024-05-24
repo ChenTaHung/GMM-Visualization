@@ -96,7 +96,7 @@ V3F.plot(fig_title="GMM-3D",
 
 In `plot()` method, the `show_plot` parameter tells whether to show the figure through the editor or not. Default is `False`.
 
-We can genreate gif file from the images we exported by the `plot()` method.
+We can generate gif file from the images we exported by the `plot()` method.
 
 ```python
 GmmViz.generateGIF(image_path = "doc/image/dim3/parms", # directory of the images showing each iteraction
