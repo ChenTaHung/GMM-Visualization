@@ -166,7 +166,13 @@ class GmmViz:
                     zaxis=dict(range=[np.min(X[:, 2])-1, np.max(X[:, 2])+1])
                 )
             )
-            fig.show()
+            
+            # show plots
+            if show_plot:
+                fig.show()
+                
+            # Save plots
+            fig.write_image(filename)
                 
         else:
             if self.dim == 2:
@@ -200,7 +206,7 @@ class GmmViz:
                 plt.show()
             plt.clf()
         
-    def plot(self, fig_title, path_prefix, X = None, show_plot = False):
+    def plot(self, fig_title = "", path_prefix = "", X = None, max_iter = 15, show_plot = False):
         '''
         Draw the data points and the fitted mixture model.
         input:
@@ -211,12 +217,21 @@ class GmmViz:
         
         self.clean_directory(path_prefix)
         
-        for i in range(self.n_iter):
-            iter_title = f"{fig_title} Iteration {i:02d}"
-            filename = f"{path_prefix}Iter_{i:02d}.png"
-            self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot = show_plot)
+        if (max_iter is None) or (max_iter > self.n_iter):
+            for i in range(self.n_iter):
+                iter_title = f"{fig_title} Iteration {i:02d}"
+                filename = f"{path_prefix}Iter_{i:02d}.png"
+                self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot = show_plot)
+        else:
+            for i in range(max_iter):
+                iter_title = f"{fig_title} Iteration {i:02d}"
+                filename = f"{path_prefix}Iter_{i:02d}.png"
+                self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot = show_plot)
 
     def plot_likelihood(self, output_path_filename, dpi = 300):
+        
+        self.clean_directory(output_path_filename)
+        
         for i in range(1, len(self.LL)):
             plt.title("log-likelihood for iteration: " + str(i))
             plt.plot(self.LL[1:1+i], marker='.')
@@ -259,6 +274,6 @@ class GmmViz:
                 if os.path.isfile(file_path) or os.path.islink(file_path):
                     os.unlink(file_path)  # Removes file or link
                 elif os.path.isdir(file_path):
-                    shutil.rmtree(file_path)  # Removes a directory and all its contents
+                    continue
             except Exception as e:
                 print(f'Failed to delete {file_path}. Reason: {e}')

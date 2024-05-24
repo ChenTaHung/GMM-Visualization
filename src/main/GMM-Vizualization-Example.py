@@ -1,9 +1,8 @@
 #%%
 import numpy as np
-import os 
+import os
 os.chdir("/Users/chentahung/Desktop/git/GMM-Visualization")
 
-import matplotlib.pyplot as plt
 from src.main.GMMViz.GaussianMixtureModel import GMM
 from src.main.GMMViz.GmmPlot import GmmViz
 from src.main.GMMViz.DataGenerater import DataGenerater
@@ -41,15 +40,16 @@ GmmViz.generateGIF(image_path = "doc/image/dim2/ll", output_path_filename = "doc
 """
 
 # 3D Gaussian Mixture Model
-X3 = DataGenerater.genData(k=5, dim=3, points_per_cluster=200, lim=[-10, 10], plot = True, random_state = 129)
-gmm3 = GMM(n_clusters=5, random_state=129)
+pio.renderers.default = "notebook" 
+X3 = DataGenerater.genData(k=3, dim=3, points_per_cluster=200, lim=[-10, 10], plot = True, random_state = 129)
+gmm3 = GMM(n_clusters=3)
 gmm3.fit(X3)
 
 #%%
-pio.renderers.default = "png"  # show in interactive editor (ipython notebook)
-
+pio.renderers.default = "notebook"  # show in interactive editor (ipython notebook)
+                                                                                    
 V3F = GmmViz(gmm3, utiPlotly=False)
-V3F.plot(fig_title="GMM-3D", path_prefix="doc/image/dim3/parms/")
+V3F.plot(fig_title="GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot=False)
 GmmViz.generateGIF(image_path = "doc/image/dim3/parms", output_path_filename = "doc/image/dim3/parms/gif/GMM-3D-Parms.gif", fps = 2)
 
 #%%
@@ -61,10 +61,10 @@ GmmViz.generateGIF(image_path = "doc/image/dim3/ll", output_path_filename = "doc
     +
 Interactive 3D plot
 """
-pio.renderers.default = "browser"
+pio.renderers.default = "png"
 
 V3T = GmmViz(gmm3, utiPlotly=True)
-V3T.plot()
+V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot = False)
 
 #%%
 """
