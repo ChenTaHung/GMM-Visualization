@@ -5,23 +5,9 @@ The project is a visualization tool kit to visualize how a `Gaussian Mixture Mod
 
 <h2><b>Installation</b></h2>
 
-First, clone the GitHub repository
-
 ```bash
 git clone https://github.com/ChenTaHung/GMM-Visualization path/you/want/to/clone
 git clone git@github.com:ChenTaHung/GMM-Visualization.git path/you/want/to/clone
-```
-Then, switch to the directory where the repository has been cloned.
-
-```python
-import numpy as np
-import os
-os.chdir('/path/to/the/cloned/repository')
-from src.main.GMMViz.GaussianMixtureModel import GMM
-from src.main.GMMViz.GmmPlot import GmmViz
-from src.main.GMMViz.DataGenerater import DataGenerater
-
-import plotly.io as pio
 ```
 
 <h2><b>Usage</b></h2>
