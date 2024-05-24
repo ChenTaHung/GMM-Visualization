@@ -1,7 +1,7 @@
 <h1 align="center"><b>GMM-Visualization</b></h1>
 
 
-The project is a visualization tool kit to visualize how a `Gaussian Mixture Model` converges, and interactively show it in a 3d space. Although the project focus on visualizing in 3D spaces, it also support plots in 2D.
+The project is a visualization toolkit designed to demonstrate how a Gaussian Mixture Model (GMM) converges within a 3D space, providing an interactive view of the process. While it primarily focuses on 3D visualizations, it also includes support for 2D plots. Additionally, the project features a Gaussian Mixture Model that uses the K-means++ algorithm for optimal centroid initialization and applies regularization to the covariance matrix to ensure its positive definiteness, thus improving the numerical robustness of the program.
 
 <h2><b>Installation</b></h2>
 
