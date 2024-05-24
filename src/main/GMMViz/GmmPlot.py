@@ -36,9 +36,6 @@ class GmmViz:
         self.useplotly = utiPlotly
 
     def _plot_gaussian_2d(self, mean, cov, ax, n_std=3.0, facecolor='none', **kwargs):
-        '''
-        Utility function to plot one Gaussian from mean and covariance.
-        '''
         pearson = cov[0, 1]/np.sqrt(cov[0, 0] * cov[1, 1])
         ell_radius_x = np.sqrt(1 + pearson)
         ell_radius_y = np.sqrt(1 - pearson)
@@ -118,31 +115,55 @@ class GmmViz:
             ax.plot_surface(ellipsoid[:,:,0], ellipsoid[:,:,1], ellipsoid[:,:,2], color = color, alpha=alpha)
     
     def _draw(self, ax, mean, Sigma, n_std=2.0, **kwargs):
-        '''
-        Function to draw the Gaussians.
-        Note: Only for two-dimensionl dataset
-        '''
-        
+        """
+        Draw each cluster in the Gaussian mixture model.
+
+        Parameters:
+        - ax (matplotlib.axes.Axes): The axes object to draw the plot on.
+        - mean (list): List of mean vectors for each component of the Gaussian mixture model.
+        - Sigma (list): List of covariance matrices for each component of the Gaussian mixture model.
+        - n_std (float): Number of standard deviations to use for plotting the ellipsoids (default: 2.0).
+        - **kwargs: Additional keyword arguments to customize the plot.
+
+        Returns:
+        None
+        """
+
         if self.dim == 2:
             for i in range(self.k):
-                self._plot_gaussian_2d(np.array(mean)[i], np.array(Sigma)[i], ax, n_std = n_std, edgecolor = self.colors[i], **kwargs)
-        elif self.dim == 3 :
+                self._plot_gaussian_2d(np.array(mean)[i], np.array(Sigma)[i], ax, n_std=n_std, edgecolor=self.colors[i], **kwargs)
+        elif self.dim == 3:
             if self.useplotly:
                 for i in range(self.k):
-                    self._plot_gaussian_3d(np.array(mean)[i], np.array(Sigma)[i], ax, color = self.colors[i], n_std = n_std)
+                    self._plot_gaussian_3d(np.array(mean)[i], np.array(Sigma)[i], ax, color=self.colors[i], n_std=n_std)
             else:
                 for i in range(self.k):
-                    self._plot_gaussian_3d(np.array(mean)[i], np.array(Sigma)[i], ax, color = self.colors[i], n_std = n_std, edgecolor = self.colors[i], **kwargs)
+                    self._plot_gaussian_3d(np.array(mean)[i], np.array(Sigma)[i], ax, color=self.colors[i], n_std=n_std, edgecolor=self.colors[i], **kwargs)
 
-    def _plot_iter(self, X, mean, Sigma, title, filename, show_plot):
+    def _plot_iter(self, X, mean, Sigma, title, filename, show_plot, save_plot):
+        """
+        Plot the GMM of each iteration.
+
+        Args:
+            X (numpy.ndarray): The data points.
+            mean (list): The mean values of the Gaussian components.
+            Sigma (list): The covariance matrices of the Gaussian components.
+            title (str): The title of the plot.
+            filename (str): The filename to save the plot.
+            show_plot (bool): Whether to display the plot.
+            save_plot (bool): Whether to save the plot.
+
+        Returns:
+            None
+        """
         if self.useplotly:
             if self.dim != 3:
                 raise ValueError("Only 3D data can be visualized with Plotly in this setting.")
             fig = go.Figure()
-            
+
             # Scatter plot for data points
             fig.add_trace(go.Scatter3d(x=X[:, 0], y=X[:, 1], z=X[:, 2], mode='markers', marker=dict(color='black', size=3, opacity=0.5)))
-            
+
             # Scatter plot for centroids
             fig.add_trace(go.Scatter3d(
                 x=np.array(mean)[:, 0], y=np.array(mean)[:, 1], z=np.array(mean)[:, 2],
@@ -155,7 +176,7 @@ class GmmViz:
             ))
 
             self._draw(fig, mean, Sigma)
-            
+
             # Update plot layout
             fig.update_layout(
                 title=title,
@@ -166,14 +187,15 @@ class GmmViz:
                     zaxis=dict(range=[np.min(X[:, 2])-1, np.max(X[:, 2])+1])
                 )
             )
-            
+
             # show plots
             if show_plot:
                 fig.show()
-                
+
             # Save plots
-            fig.write_image(filename)
-                
+            if save_plot:
+                fig.write_image(filename)
+
         else:
             if self.dim == 2:
                 fig, ax = plt.subplots(figsize=(8, 8))
@@ -192,41 +214,49 @@ class GmmViz:
             else:
                 raise ValueError("Only 2D and 3D data can be visualized.")
 
-           
             self._draw(ax, mean, Sigma, lw=3)
-            
+
             ax.set_xlim(min(X[:, 0]), max(X[:, 0]))
             ax.set_ylim(min(X[:, 1]), max(X[:, 1]))
             if self.dim == 3:
                 ax.set_zlim(min(X[:, 2]), max(X[:, 2]))
 
             plt.title(title)
-            plt.savefig(filename, dpi = 200)
+            if save_plot:
+                plt.savefig(filename, dpi=200)
             if show_plot:
                 plt.show()
             plt.clf()
         
-    def plot(self, fig_title = "", path_prefix = "", X = None, max_iter = 15, show_plot = False):
-        '''
-        Draw the data points and the fitted mixture model.
-        input:
-            - title: title of plot and name with which it will be saved.
-        '''
-        if X is  None:
+    def plot(self, fig_title="", path_prefix="", X=None, max_iter=15, show_plot=False, save_plot=True):
+        """
+        Plot the Gaussian Mixture Model (GMM) iterations.
+
+        Args:
+            fig_title (str): Title of the figure.
+            path_prefix (str): Prefix for the path where the plots will be saved.
+            X (ndarray, optional): Input data. If not provided, the model's data will be used.
+            max_iter (int, optional): Maximum number of iterations to plot. Defaults to 15.
+            show_plot (bool, optional): Whether to display the plot. Defaults to False.
+            save_plot (bool, optional): Whether to save the plot. Defaults to True.
+        """
+
+        if X is None:
             X = self.data
-        
-        self.clean_directory(path_prefix)
-        
+
+        if path_prefix != "":
+            self.clean_directory(path_prefix)
+
         if (max_iter is None) or (max_iter > self.n_iter):
             for i in range(self.n_iter):
                 iter_title = f"{fig_title} Iteration {i:02d}"
                 filename = f"{path_prefix}Iter_{i:02d}.png"
-                self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot = show_plot)
+                self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot=show_plot, save_plot=save_plot)
         else:
             for i in range(max_iter):
                 iter_title = f"{fig_title} Iteration {i:02d}"
                 filename = f"{path_prefix}Iter_{i:02d}.png"
-                self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot = show_plot)
+                self._plot_iter(X, self.mean[i], self.Sigma[i], iter_title, filename, show_plot=show_plot, save_plot=save_plot)
 
     def plot_likelihood(self, output_path_filename, dpi = 300):
         
@@ -263,6 +293,7 @@ class GmmViz:
     @staticmethod    
     def clean_directory(dir_path):
         # Check if the directory exists
+        
         if not os.path.exists(dir_path):
             print("Directory does not exist.")
             return

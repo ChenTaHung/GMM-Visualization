@@ -64,7 +64,8 @@ Interactive 3D plot
 pio.renderers.default = "browser"
 
 V3T = GmmViz(gmm3, utiPlotly=True)
-V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot = False)
+V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3-plotly/parms/", show_plot = False)
+GmmViz.generateGIF(image_path = "doc/image/dim3-plotly/parms", output_path_filename = "doc/image/dim3-plotly/parms/gif/GMM-3D-Parms-plotly.gif", fps = 2)
 
 #%%
 """
@@ -72,8 +73,8 @@ Over 3 dimensions : Using PCA
     +
 Interactive 3D plot
 """
-X7 = DataGenerater.genData(k=6, dim=7, points_per_cluster=100, lim=[-20, 20], plot = False, random_state = 129)
-PCAGMM = GMM(n_clusters=6)
+X7 = DataGenerater.genData(k=3, dim=7, points_per_cluster=100, lim=[-20, 20], plot = False, random_state = 129)
+PCAGMM = GMM(n_clusters=3)
 
 PCAGMM.PCA_fit(X = X7, n_components=3)
 #%%
@@ -81,5 +82,5 @@ PCAGMM.PCA_fit(X = X7, n_components=3)
 pio.renderers.default = "browser"
 
 V7T = GmmViz(PCAGMM, utiPlotly=True)
-V7T.plot(fig_title = "GMM-3D")
+V7T.plot(fig_title = "GMM-3D", save_plot = False, show_plot=True)
 # %%

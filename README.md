@@ -90,6 +90,7 @@ V3F = GmmViz(gmm3, utiPlotly=False) # plot via matplotlib
 V3F.plot(fig_title="GMM-3D", 
          path_prefix="doc/image/dim3/parms/", # image will be stored in the `path_prefix` directory.
          show_plot = False, #  tells whether to show the figure through the editor or not. Default is `False`.
+         save_plot = True, # export the figures. Default is True
          max_iter = 15) # number of iteration to plot. Default is 15.
 ```
 
@@ -117,14 +118,20 @@ pio.renderers.default = "browser" # it will open the browser to show the plots.
 
 # GMM for 3 dim dataset
 V3T = GmmViz(gmm3, utiPlotly=True)
-V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot = True) 
+V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3-plotly/parms/", show_plot = False)
+GmmViz.generateGIF(image_path = "doc/image/dim3-plotly/parms", output_path_filename = "doc/image/dim3-plotly/parms/gif/GMM-3D-Parms-plotly.gif", fps = 2)
 
 # PCA_fit GMM
 V7T = GmmViz(PCAGMM, utiPlotly=True)
-V7T.plot(fig_title = "GMM-3D")
+V7T.plot(fig_title = "GMM-3D", 
+         path_prefix = "", # Directory to export the images, keep default value = "" when save_plot = False
+         save_plot = False, # no need to save the figures.
+         show_plot=True)
 ```
 
-If `pio.renderers.default` set to `"browser"` when using plotly, the image will not be exported to `path_prefix` directory.
+<p align = 'center'><img src = 'https://github.com/ChenTaHung/GMM-Visualization/blob/main/doc/image/dim3-plotly/parms/gif/GMM-3D-Parms-plotly.gif' alt = 'Image' style = 'width: 800px'/></p>
+
+<p align = 'center'> <sub> Visualize 3-dimensional data via Plotly </sub> </p>
 
 #### 4. Visualize in 2D spaces with a 2 dimensional dataset.
 
