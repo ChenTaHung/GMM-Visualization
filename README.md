@@ -109,7 +109,7 @@ GmmViz.generateGIF(image_path = "doc/image/dim3/parms", # directory of the image
 #### 3.2 Using Plotly (set `utiPlotly = True`):
 
 ```python
-`"""
+"""
 Interactive 3D plot
 """
 # plot
@@ -124,9 +124,9 @@ V7T = GmmViz(PCAGMM, utiPlotly=True)
 V7T.plot(fig_title = "GMM-3D")
 ```
 
-If show in browser using plotly, the image will not be exported to `path_prefix` directory.
+If `pio.renderers.default` set to `"browser"` when using plotly, the image will not be exported to `path_prefix` directory.
 
-#### 4. Visualize in 2D spaces.
+#### 4. Visualize in 2D spaces with a 2 dimensional dataset.
 
 ```python
 
@@ -136,6 +136,11 @@ If show in browser using plotly, the image will not be exported to `path_prefix`
 
 np.random.seed(128)
 X2 = DataGenerater.genData(k=3, dim=2, points_per_cluster=200, lim=[-10, 10], plot = True)
+```
+
+<p align = 'center'><img src = 'https://github.com/ChenTaHung/GMM-Visualization/blob/main/doc/image/data/k3d2.png' alt = 'Image' style = 'width: 800px'/></p>
+
+```python
 gmm2 = GMM(n_clusters=3, random_state=129)
 gmm2.fit(X2)
 
