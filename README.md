@@ -131,12 +131,14 @@ pio.renderers.default = "browser" # it will open the browser to show the plots.
 
 # GMM for 3 dim dataset
 V3T = GmmViz(gmm3, utiPlotly=True)
-V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot = False) # the parameters doesn't effect if you show in browser.
+V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot = True) 
 
 # PCA_fit GMM
 V7T = GmmViz(PCAGMM, utiPlotly=True)
 V7T.plot(fig_title = "GMM-3D")
 ```
+
+If show in browser using plotly, the image will not be exported to `path_prefix` directory.
 
 #### 4. Visualize in 2D spaces.
 

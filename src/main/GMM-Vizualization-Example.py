@@ -61,7 +61,7 @@ GmmViz.generateGIF(image_path = "doc/image/dim3/ll", output_path_filename = "doc
     +
 Interactive 3D plot
 """
-pio.renderers.default = "png"
+pio.renderers.default = "browser"
 
 V3T = GmmViz(gmm3, utiPlotly=True)
 V3T.plot(fig_title = "GMM-3D", path_prefix="doc/image/dim3/parms/", show_plot = False)
