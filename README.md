@@ -1,7 +1,7 @@
 <h1 align="center"><b>GMM-Visualization</b></h1>
 
 
-The project is a visualization toolkit crafted to illustrate the convergence of a Gaussian Mixture Model (GMM) within a 3D space, offering an interactive experience. While its main emphasis is on 3D visualizations, it also accommodates 2D plotting. The toolkit includes a custom implementation of a Gaussian Mixture Model that leverages the K-means++ algorithm for optimal centroid initialization and incorporates regularization of the covariance matrix to maintain its positive definiteness, thereby enhancing the program's numerical stability. The GMM parameters are estimated using the Expectation-Maximization (EM) algorithm.
+The project is a visualization toolkit designed to illustrate the convergence of a Gaussian Mixture Model (GMM) in 3D space, providing an interactive experience. While primarily focused on 3D visualization, it also supports 2D plotting. The toolkit features a custom GMM implementation utilizing K-means++ for optimal centroid initialization and covariance matrix regularization to ensure positive definiteness, enhancing numerical stability. The Expectation-Maximization (EM) algorithm estimates GMM parameters. Additionally, the toolkit applies Principal Component Analysis (PCA) to reduce data dimensions to three, enabling effective 3D visualization of high-dimensional data.
 
 <h2><b>Installation</b></h2>
 
@@ -60,7 +60,7 @@ gmm3.fit(X3)
 
 You can use `gmm3.getEstimands(parm = )` with arguments options: `['mean', 'Sigma', 'log_likelihood']`, to get the corrsponding parameter information in the covergence of the GMM. If no argument passed, then it will return the dictionary of the parameters estimation in a dictionary.
 
-#### 2.2 Working with data under 3 dimensions.
+#### 2.2 Working with data over 3 dimensions.
 
 When a dataset exceeds 3 dimensions, visualizing it directly in 3D space is impractical. `Principal Component Analysis (PCA)` addresses this by reducing the dataset's dimensionality. It projects the data onto the top three directions of maximum variance, identified through eigenvectors of the covariance matrix. Setting the number of principal components (`n_component`) to **3** allows the transformed dataset to be visualized effectively in three-dimensional space.
 
